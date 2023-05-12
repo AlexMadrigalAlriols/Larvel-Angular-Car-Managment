@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Cars\IndexRequest;
 use App\Http\Requests\Cars\StoreRequest;
 use App\Http\Requests\Cars\UpdateRequest;
+use App\Http\Requests\Users\AuthRequest;
 use App\Http\Services\ApiResponse;
 use App\Models\Car;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-class CarController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -65,5 +68,17 @@ class CarController extends Controller
         }
 
         return ApiResponse::bad("Error On Delete Resource");
+    }
+
+    public function login(AuthRequest $request) {
+        $validated = $request->validated();
+
+        if($user = User::where("code", $validated["code"])->first()) {
+            if(!Auth::loginUsingId($user->id)) {
+                return ApiResponse::bad("Error On Delete Resource");
+            }
+        }
+
+        return ApiResponse::ok("Success Deleted", ["token" => $request->user()->createToken($request->ip())->plainTextToken]);
     }
 }

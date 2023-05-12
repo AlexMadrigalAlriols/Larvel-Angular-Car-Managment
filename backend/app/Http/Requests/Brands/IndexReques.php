@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Cars;
+namespace App\Http\Requests\Brands;
 
 use Illuminate\Foundation\Http\FormRequest;
 

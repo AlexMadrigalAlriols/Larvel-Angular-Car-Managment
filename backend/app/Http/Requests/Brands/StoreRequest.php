@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Cars;
+namespace App\Http\Requests\Brands;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class IndexRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class IndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string'
         ];
     }
 }

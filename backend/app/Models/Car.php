@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Car extends Model
 {
@@ -19,10 +19,10 @@ class Car extends Model
     /**
      * Get the brand associated with the Car
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function brand(): HasOne
+    public function brand(): BelongsTo
     {
-        return $this->hasOne(Brand::class, 'id', 'brand_id');
+        return $this->BelongsTo(Brand::class);
     }
 }

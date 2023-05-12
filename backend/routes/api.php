@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Api\Controllers\BrandController;
 use App\Http\Controllers\Api\CarController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +18,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'v1', 'as' => 'api.'], function() {
-    Route::apiResource('cars', CarController::class)->except('index');
+    Route::post('login', [UserController::class, 'login'])->name('user.login');
+
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        //Cars
+        Route::post('cars/list', [CarController::class, 'index'])->name('cars.index');
+        Route::apiResource('cars', CarController::class)->except('index');
+
+        // Brands
+        Route::post('brands/list', [BrandController::class, 'index'])->name('brands.index');
+        Route::apiResource('brands', BrandController::class)->except('index');
+    });
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
