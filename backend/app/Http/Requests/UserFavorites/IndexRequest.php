@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Cars;
+namespace App\Http\Requests\UserFavorites;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,7 @@ class IndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
         ];
     }
 }

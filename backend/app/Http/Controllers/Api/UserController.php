@@ -10,6 +10,7 @@ use App\Http\Requests\Users\AuthRequest;
 use App\Http\Services\ApiResponse;
 use App\Models\Car;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -19,7 +20,7 @@ class UserController extends Controller
      */
     public function index(IndexRequest $request)
     {
-        $models = Car::get();
+        $models = User::get();
 
         return ApiResponse::ok("Data Found", $models);
     }
@@ -29,8 +30,8 @@ class UserController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        if($car = Car::create($request->validated())) {
-            return ApiResponse::ok("Resource Created", $car);
+        if($user = User::create($request->validated())) {
+            return ApiResponse::ok("Resource Created", $user);
         }
 
         return ApiResponse::bad("Error On Create Resource");
@@ -39,19 +40,19 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Car $car)
+    public function show(User $user)
     {
-        return ApiResponse::ok("Data Found", $car);
+        return ApiResponse::ok("Data Found", $user);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, Car $car)
+    public function update(UpdateRequest $request, User $user)
     {
-        $car->fill($request->validated());
+        $user->fill($request->validated());
 
-        if($car->save()) {
+        if($user->save()) {
             return ApiResponse::ok("Success Save");
         }
 
@@ -61,9 +62,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Car $car)
+    public function destroy(User $user)
     {
-        if($car->delete()) {
+        if($user->delete()) {
             return ApiResponse::ok("Success Deleted");
         }
 
@@ -74,11 +75,17 @@ class UserController extends Controller
         $validated = $request->validated();
 
         if($user = User::where("code", $validated["code"])->first()) {
-            if(!Auth::loginUsingId($user->id)) {
-                return ApiResponse::bad("Error On Delete Resource");
+            if(Auth::loginUsingId($user->id)) {
+                return ApiResponse::ok("User Found", ["user_id" => $user->id, "token" => $request->user()->createToken($request->ip())->plainTextToken]);
             }
         }
 
-        return ApiResponse::ok("Success Deleted", ["token" => $request->user()->createToken($request->ip())->plainTextToken]);
+        return ApiResponse::bad("Error on login");
+    }
+
+    public function logout(User $user) {
+        $user->tokens()->delete();
+
+        return ApiResponse::ok("Token Revoked");
     }
 }

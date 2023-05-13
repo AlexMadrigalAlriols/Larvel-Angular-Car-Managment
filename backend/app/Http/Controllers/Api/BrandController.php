@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Api\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Brands\IndexRequest;
@@ -15,7 +15,7 @@ class BrandController extends Controller
         /**
      * Display a listing of the resource.
      */
-    public function index(IndexRequest $request)
+    public function index()
     {
         $models = Brand::get();
 

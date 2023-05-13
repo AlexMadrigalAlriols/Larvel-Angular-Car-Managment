@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 class ApiResponse
 {
     public static function ok($message = "", $data = null) {
-        $response = ["success" => true, "message" => "Response Ok"];
+        $response = ["success" => true, "message" => $message];
 
         if($data) {
             $response["data"] = $data;
@@ -20,7 +20,7 @@ class ApiResponse
     public static function bad($message = "") {
         return response()->json([
             "success" => false,
-            "message" => trans([$message])
+            "message" => trans($message)
         ], Response::HTTP_BAD_REQUEST);
     }
 }

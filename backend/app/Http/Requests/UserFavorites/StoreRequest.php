@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Cars;
+namespace App\Http\Requests\UserFavorites;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'brand_id' => 'exists:brands,id',
-            'model_name' => 'string',
-            'img' => 'nullable',
+            'user_id' => 'required|exists:users,id',
+            'car_id' => 'required|exists:cars,id'
         ];
     }
 }
