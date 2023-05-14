@@ -42,3 +42,8 @@ Encender el servidor
 ```bash
 ng s
 ```
+
+
+# INFO
+Esta creado un usuario con code: TEST123 para poder hacer las pruebas.
+Adicionalmente esta adjuntado una coleccion de postman con todos los endpoints.
