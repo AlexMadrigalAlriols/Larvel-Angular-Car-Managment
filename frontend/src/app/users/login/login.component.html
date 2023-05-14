@@ -1,19 +1,26 @@
-<div class="container m-auto">
-    <form autocomplete="off" >
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="mt-5 card">
-                    <div class="card-body text-center">
-                        <img src="/assets/img/logo.png" alt="Logo" width="400">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="emailInput" name="email" placeholder="name@example.com" formControlName="email"/>
-                            <label for="emailInput">Employee Code</label>
-                        </div>
+<div class="login-container">
+    <div class="container m-auto">
+        <form (ngSubmit)="onSubmit()" [formGroup]="form">
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <img src="/assets/img/logo.png" alt="Logo" width="400">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="codeInput" name="code" placeholder="EX123" formControlName="code"/>
+                                <label for="codeInput">Employee Code</label>
+                            </div>
 
-                        <button type="submit" class="btn btn-success w-100 mt-1">Login</button>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="error">
+                                Error: Employee not found!
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+    
+                            <button type="submit" class="btn btn-success w-100 mt-1"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>

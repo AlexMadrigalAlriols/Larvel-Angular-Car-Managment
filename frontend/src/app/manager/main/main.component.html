@@ -1,1 +1,41 @@
-<p>main works!</p>
+<main *ngIf="(dataLoaded | async)">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Recomotor</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/manager">Home</a>
+                </li>
+                </ul>
+    
+                <span class="me-3">Employee: {{user_data.email}}</span>
+                <button class="btn btn-danger" (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <div class="row">
+            <div class="mt-5" *ngFor="let brand of brands_data">
+                <h2>{{brand.name}}</h2>
+                <div class="card d-inline-block m-3" style="width: 18rem;" *ngFor="let car of brand.cars">
+                    <img src="{{car.img}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{car.model_name}}</h5>
+                        <button class="btn btn-success w-100 mt-2" (click)="favoriteCar(car.id)" *ngIf="!is_favorite(car.id)"><i class="fa-regular fa-heart"></i> Favorite</button>
+                        <button class="btn btn-warning w-100 mt-2" (click)="unfavoriteCar(getFavoriteByCar(car.id))" *ngIf="is_favorite(car.id)"><i class="fa-solid fa-heart-crack"></i> Unfavorite</button>
+                    </div>
+                </div>
+
+                <div *ngIf="brand.cars.length == 0">
+                    <h5>- No cars found</h5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>

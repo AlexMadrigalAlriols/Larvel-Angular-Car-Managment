@@ -16,7 +16,7 @@ export class FrameworkService {
 
   constructor(private http: HttpClient) { }
 
-  get(url: string, body: any, auth: boolean = true) {
+  get(url: string, auth: boolean = true) {
     if(auth) {
         header = new HttpHeaders({
           'Content-Type': 'application/json',
@@ -41,5 +41,19 @@ export class FrameworkService {
     }
 
     return this.http.post(`${baseUrl}/${url}`, body, {headers: header});
+  }
+
+  delete(url: string, auth: boolean = true) {
+    if(auth) {
+      header = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      });
+    }
+
+    return this.http.delete(`${baseUrl}/${url}`, {headers: header});
   }
 }

@@ -17,6 +17,8 @@ class UserFavoriteController extends Controller
      */
     public function index(IndexRequest $request)
     {
+        $request = $request->validated();
+        
         $user_f = UserFavorite::where("user_id", $request["user_id"])->get();
 
         foreach ($user_f as $idx => $favorite) {
@@ -31,8 +33,12 @@ class UserFavoriteController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        if($user_f = UserFavorite::create($request->validated())) {
-            return ApiResponse::ok("Resource Created", $user_f);
+        $validated = $request->validated();
+
+        if(!UserFavorite::where("user_id", $validated["user_id"])->where("car_id", $validated["car_id"])->first()) {
+            if($user_f = UserFavorite::create($validated)) {
+                return ApiResponse::ok("Resource Created", $user_f);
+            }
         }
 
         return ApiResponse::bad("Error On Create Resource");

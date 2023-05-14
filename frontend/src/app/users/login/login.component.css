@@ -7,8 +7,15 @@
     --black: #000;
     --red: #C14B57;
   }
-  
-  html,
-  body {
-    height: 100%;
-  }
+
+.login-container {
+    background-image: url("/assets/img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100%;
+    display: flex;
+}
+
+.card {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}

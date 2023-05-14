@@ -19,6 +19,10 @@ class BrandController extends Controller
     {
         $models = Brand::get();
 
+        foreach ($models as $idx => $brand) {
+            $models[$idx]["cars"] = $brand->cars;
+        }
+
         return ApiResponse::ok("Data Found", $models);
     }
 
