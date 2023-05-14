@@ -17,7 +17,7 @@ class CarFactory extends Factory
      */
     public function definition(): array
     {
-        $idsBrands = DB::table('brands')->pluck('id_brand');
+        $idsBrands = DB::table('brands')->pluck('id');
 
         return [
             'brand_id' => fake()->randomElement($idsBrands),
